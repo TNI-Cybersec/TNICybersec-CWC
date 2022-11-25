@@ -1,0 +1,2 @@
+# References:
+- [A technique that a lot of SQL injection beginners don’t know | Atmanand Nagpure write-up](https://medium.com/bugbountywriteup/a-technique-that-a-lot-of-sql-injection-beginners-dont-know-atmanand-nagpure-write-up-abdc7c269dd5)
