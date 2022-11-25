@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>TNI Cyber Warfare Contest 2020 - Dashboard</title>
+    
+    <!-- Bootstrap -->   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <script src="js/moment.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <!-- Custom styles for this template -->
+    <style type="text/css">
+        body {
+            padding-top: 5rem;
+        }
+        .starter-template {
+            padding: 1.5rem;
+            text-align: center;
+        }
+    </style>
+
+    <!-- VueJS, development version, includes helpful console warnings -->
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">TNI-CWC</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">Summary <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="profile.html">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Game</a>
+            </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-info text-center" role="alert">
+                    <b>** Announcement **</b><br>
+                    Good Luck, Have Fun!
+                </div>
+            </div>
+        </div>
+
+        <section class="jumbotron text-center" style="padding: 30px;">
+            <div class="container">
+                <h2 class="jumbotron-heading">TNI Cyber Warfare Contest 2020</h2>
+                <span class="lead text-muted">Time Remaining</span>
+                <h3 class="jumbotron-time-remaining" style="margin-bottom: 0;">00:00:05:36</h3>
+            </div>
+        </section>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div>
+                    <h2>Timeline</h2>
+                    <!--<p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>-->
+                </div>
+                <canvas id="summary-chart" width="400" height="150"></canvas>
+            </div>
+            <div class="col-lg-12">
+                <br>
+                <table class="table table-striped table-bordered">
+                    <h2>Leaderboard</h2>
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th class="text-center">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>S!gnature</td>
+                            <td class="text-center">3200</td>
+                        </tr>
+                        <tr>
+                            <td>MAIDEN</td>
+                            <td class="text-center">3000</td class="text-center">
+                        </tr>
+                        <tr>
+                            <td>Newbie</td>
+                            <td class="text-center">1500</td class="text-center">
+                        </tr>
+                        <tr>
+                            <td>Noob</td>
+                            <td class="text-center">1000</td class="text-center">
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <h2>10 Latest Actions</h2>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Teams</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>S!gnature</td>
+                            <td>Gain an interval points from the hill</td>
+                        </tr>
+                        <tr>
+                            <td>S!gnature</td>
+                            <td>Captured The Flag</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+        </div>
+
+    </main><!-- /.container -->
+
+    <script>
+        var generalConfig = {
+            steppedLine: false,
+        }
+
+		var timeFormat = 'MM/DD/YYYY HH:mm';
+
+		function newDate(days) {
+            console.log(moment().add(days, 'd').toDate())
+            return moment().add(days, 'd').toDate();
+		}
+
+		function newDateString(days) {
+			return moment().add(days, 'd').format(timeFormat);
+        }
+        
+        var ctx = document.getElementById('summary-chart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [
+                    new Date('January 18, 2020 11:00:00 UTC+7'),
+                    new Date('January 18, 2020 11:30:00 UTC+7'),
+                    new Date('January 18, 2020 12:00:00 UTC+7'),
+                    new Date('January 18, 2020 12:30:00 UTC+7'),
+                    new Date('January 18, 2020 13:00:00 UTC+7'),
+                    new Date('January 18, 2020 13:30:00 UTC+7'),
+                    new Date('January 18, 2020 14:00:00 UTC+7'),
+                    new Date('January 18, 2020 14:30:00 UTC+7'),
+                    new Date('January 18, 2020 15:00:00 UTC+7'),
+                ],
+                datasets: [
+                    {
+                        label: 'S!gnature',
+                        backgroundColor: 'rgba(54, 162, 235, 1)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        fill: false,
+                        steppedLine: generalConfig.steppedLine,
+                        data: [
+                            {
+                                x: new Date('January 18, 2020 11:00:00 UTC+7'),
+                                y: 0
+                            }, {
+                                x: new Date('January 18, 2020 11:10:00 UTC+7'),
+                                y: 10
+                            }, {
+                                x: new Date('January 18, 2020 11:20:00 UTC+7'),
+                                y: 30
+                            }, {
+                                x: new Date('January 18, 2020 11:30:10 UTC+7'),
+                                y: 64
+                            }, {
+                                x: new Date('January 18, 2020 11:40:10 UTC+7'),
+                                y: 80
+                            }, {
+                                x: new Date('January 18, 2020 12:00:00 UTC+7'),
+                                y: 80
+                            }, {
+                                x: new Date('January 18, 2020 14:00:00 UTC+7'),
+                                y: 2000
+                            }, {
+                                x: new Date('January 18, 2020 15:00:00 UTC+7'),
+                                y: 3800
+                            }
+                        ],
+                    }, 
+                    {
+                        label: 'MAIDEN',
+                        backgroundColor: 'rgba(255, 99, 132, 1)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        fill: false,
+                        steppedLine: generalConfig.steppedLine,
+                        data: [
+                            {
+                                x: new Date('January 18, 2020 11:00:00 UTC+7'),
+                                y: 0
+                            }, {
+                                x: new Date('January 18, 2020 11:10:00 UTC+7'),
+                                y: 10
+                            }, {
+                                x: new Date('January 18, 2020 11:20:00 UTC+7'),
+                                y: 20
+                            }, {
+                                x: new Date('January 18, 2020 11:30:10 UTC+7'),
+                                y: 44
+                            }, {
+                                x: new Date('January 18, 2020 11:42:10 UTC+7'),
+                                y: 70
+                            }, {
+                                x: new Date('January 18, 2020 12:00:00 UTC+7'),
+                                y: 70
+                            }, {
+                                x: new Date('January 18, 2020 14:00:00 UTC+7'),
+                                y: 2500
+                            }, {
+                                x: new Date('January 18, 2020 15:00:00 UTC+7'),
+                                y: 3000
+                            }
+                        ],
+                    }, 
+                    {
+                        label: 'Newbie',
+                        backgroundColor: 'rgba(75, 192, 192, 1)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        fill: false,
+                        steppedLine: generalConfig.steppedLine,
+                        data: [
+                            {
+                                x: new Date('January 18, 2020 11:00:00 UTC+7'),
+                                y: 0
+                            }, {
+                                x: new Date('January 18, 2020 11:10:00 UTC+7'),
+                                y: 10
+                            }, {
+                                x: new Date('January 18, 2020 11:15:00 UTC+7'),
+                                y: 20
+                            }, {
+                                x: new Date('January 18, 2020 11:20:00 UTC+7'),
+                                y: 30
+                            }, {
+                                x: new Date('January 18, 2020 11:45:00 UTC+7'),
+                                y: 60
+                            }, {
+                                x: new Date('January 18, 2020 12:00:00 UTC+7'),
+                                y: 60
+                            }, {
+                                x: new Date('January 18, 2020 14:00:00 UTC+7'),
+                                y: 1000
+                            }, {
+                                x: new Date('January 18, 2020 15:00:00 UTC+7'),
+                                y: 1500
+                            }
+                        ],
+                    }, 
+                    {
+                        label: 'Noob',
+                        backgroundColor: 'rgba(255, 206, 86, 1)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        fill: false,
+                        steppedLine: generalConfig.steppedLine,
+                        data: [
+                            {
+                                x: new Date('January 18, 2020 11:00:00 UTC+7'),
+                                y: 0
+                            }, {
+                                x: new Date('January 18, 2020 11:40:00 UTC+7'),
+                                y: 10
+                            }, {
+                                x: new Date('January 18, 2020 12:00:00 UTC+7'),
+                                y: 20
+                            }, {
+                                x: new Date('January 18, 2020 14:00:00 UTC+7'),
+                                y: 800
+                            }, {
+                                x: new Date('January 18, 2020 15:00:00 UTC+7'),
+                                y: 2000
+                            }
+                        ],
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: true,
+                            drawBorder: true,
+                            drawOnChartArea: false,
+                        },
+                        type: 'time',
+						time: {
+                            parser: timeFormat,
+							tooltipFormat: 'll HH:mm'
+                        },
+                        ticks: {
+                            source: 'labels'
+                        },
+						scaleLabel: {
+							display: true,
+							labelString: 'Time'
+						}
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: true,
+                            drawBorder: true,
+                            drawOnChartArea: false,
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        </script>
+</body class="bg-light" >
+</html>
