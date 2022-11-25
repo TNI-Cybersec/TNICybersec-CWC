@@ -1,0 +1,105 @@
+{
+  "rules": {
+    "events": {
+      "$eventId": {
+        "event_answers": {
+          "$teamId": {
+            ".read": "root.child('events').child($eventId).child('event_members').child(auth.uid).val() == $teamId",
+            "$missionId": {
+              ".write": "root.child('events').child($eventId).child('event_members').child(auth.uid).val() == $teamId && (!root.child('events').child($eventId).child('tracker_config').child('start').exists() || root.child('events').child($eventId).child('tracker_config').child('start').val() < now) && (!root.child('events').child($eventId).child('tracker_config').child('end').exists() || root.child('events').child($eventId).child('tracker_config').child('end').val() > now)",
+              ".validate": "newData.val() == root.child('events').child($eventId).child('event_flags').child($missionId).val()"
+            }
+          }
+        },
+        "event_flags": {
+          ".read": "(root.child('events').child($eventId).child('event_members').child(auth.uid).isString() || root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid) && query.orderByValue && query.equalTo !== null && (query.limitToFirst === 1 || query.limitToLast === 1)",
+          ".write": "false",
+          ".indexOn": ".value"
+        },
+        "event_jeopardy_firstblood": {
+          ".read": "root.child('events').child($eventId).child('event_members').child(auth.uid).isString() || root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid",
+          ".write": "false"
+        },
+        "event_koth_firstblood": {
+          ".read": "root.child('events').child($eventId).child('event_members').child(auth.uid).isString() || root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid",
+          ".write": "false"
+        },
+        "event_koth_captures": {
+          "$missionId": {
+            ".read": "root.child('events').child($eventId).child('event_members').child(auth.uid).isString() || root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid",
+            ".write": "false"
+          }
+        },
+        "event_koth_status": {
+          ".read": "root.child('events').child($eventId).child('event_members').child(auth.uid).isString() || root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid",
+          ".write": "false"
+        },
+        "event_members": {
+          ".read": "root.child('events').child($eventId).child('event_members').child(auth.uid).isString() || root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid",
+          ".write": "false"
+        },
+        "event_score_transactions": {
+          ".read": "root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid || root.child('events').child($eventId).child('event_members').child(auth.uid).isString()",
+          "$transactionId": {
+            ".write": "!data.exists() && root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid"
+          }
+        },
+        "event_shop_items": {
+          ".read": "false",
+          ".write": "false"
+        },
+        "event_shop_price": {
+          ".read": "false",
+          ".write": "false"
+        },
+        "event_team_inventory": {
+          "$teamId": {
+            ".read": "root.child('events').child($eventId).child('event_members').child(auth.uid).val() == $teamId || root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid",
+            ".write": "false"
+          }
+        },
+        "event_team_score": {
+          ".read": "root.child('events').child($eventId).child('event_members').child(auth.uid).isString() || root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid || root.child('events').child($eventId).child('event_info').child('admins').child(auth.uid).val() != null",
+          ".write": "false",
+          ".indexOn": ".value"
+        },
+        "event_teams": {
+          ".read": "root.child('events').child($eventId).child('event_members').child(auth.uid).isString() || root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid",
+          ".write": "false",
+          ".indexOn": ".value"
+        },
+        "event_user_shopping": {
+          "$purchaseId": {
+            ".read": "root.child('events').child($eventId).child('event_members').child(auth.uid).val() == data.child('team_id').val()",
+            ".write": "root.child('events').child($eventId).child('event_members').child(auth.uid).val() == newData.child('team_id').val() && (!root.child('events').child($eventId).child('tracker_config').child('start').exists() || root.child('events').child($eventId).child('tracker_config').child('start').val() < now) && (!root.child('events').child($eventId).child('tracker_config').child('end').exists() || root.child('events').child($eventId).child('tracker_config').child('end').val() > now)",
+            ".validate": "root.child('events').child($eventId).child('event_shop_items').child(newData.child('item_id').val()).exists() && (root.child('events').child($eventId).child('event_team_score').child(newData.child('team_id').val()).exists() ? root.child('events').child($eventId).child('event_team_score').child(newData.child('team_id').val()).val() : 0) >= root.child('events').child($eventId).child('event_shop_price').child(newData.child('item_id').val()).val()"
+          }
+        },
+        "event_info": {
+          ".read": "data.child('owner').val() == auth.uid",
+          ".write": false,
+          "name": {
+            ".read": "true"
+          }
+        },
+        "game_events": {
+          ".read": "root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid || (root.child('events').child($eventId).child('event_members').child(auth.uid).isString() && (query.orderByKey || (query.orderByChild == 'team' && query.equalTo == root.child('events').child($eventId).child('event_members').child(auth.uid).val()) && query.limitToLast == 15))",
+          ".write": "false",
+          ".indexOn": ["team"]
+        },
+        "tracker_config": {
+          ".read": "root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid",
+          ".write": "false"
+        },
+        "tracking_data": {
+          ".read": "root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid",
+          "$hostId": {
+            "$updateId": {
+              ".write": "root.child('events').child($eventId).child('event_info').child('owner').val() == auth.uid && !data.exists()"
+            }
+          }
+        }
+      }
+    }
+  }
+}
