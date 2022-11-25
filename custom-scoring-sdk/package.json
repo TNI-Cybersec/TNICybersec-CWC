@@ -1,0 +1,20 @@
+{
+  "name": "custom-scoring-sdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npx tsc && node dist/main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "child-process-promise": "^2.2.1",
+    "firebase": "^7.24.0",
+    "typescript": "^3.9.10"
+  },
+  "devDependencies": {
+    "@types/node": "^12.20.34"
+  }
+}
